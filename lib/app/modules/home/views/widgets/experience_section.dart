@@ -28,12 +28,29 @@ class DesktopExperience extends GetView<HomeController> {
       padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 60),
       child: Column(
         children: [
-          Text(
-            "Professional Journey",
-            style: AppTextStyles.header.copyWith(
-              fontSize: 40,
-              color: Colors.white,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Text(
+                "Work",
+                style: AppTextStyles.header.copyWith(
+                  fontSize: 40,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Text(
+                "Experience",
+                style: AppTextStyles.header.copyWith(
+                  fontSize: 40,
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ).animate().fadeIn().moveY(begin: 20, end: 0),
           const SizedBox(height: 10),
           Text(
@@ -53,41 +70,11 @@ class DesktopExperience extends GetView<HomeController> {
                     left: 0,
                     top: 0,
                     bottom: 0,
-                    child: Container(
-                      width: 2,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            AppColors.primary.withOpacity(0),
-                            AppColors.primary,
-                            AppColors.primary.withOpacity(0),
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                      ),
-                    ),
+                    child: Container(width: 2, color: Colors.white10),
                   )
                   .animate()
                   .fadeIn(duration: 600.ms)
                   .scaleY(begin: 0, alignment: Alignment.topCenter),
-
-              // Highlight Dot
-              Positioned(
-                left: -4,
-                top: 0,
-                child: Container(
-                  width: 10,
-                  height: 10,
-                  decoration: const BoxDecoration(
-                    color: AppColors.primary,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(color: AppColors.primary, blurRadius: 10),
-                    ],
-                  ),
-                ),
-              ).animate().fadeIn(delay: 1000.ms).scale(),
 
               // Content List
               Padding(
@@ -119,10 +106,12 @@ class MobileExperience extends GetView<HomeController> {
       child: Column(
         children: [
           Text(
-            "Professional Journey",
+            "Work Experience",
+            textAlign: TextAlign.center,
             style: AppTextStyles.header.copyWith(
               fontSize: 32,
               color: Colors.white,
+              fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 10),
@@ -166,122 +155,143 @@ class _ExperienceCardState extends State<_ExperienceCard> {
     return MouseRegion(
       onEnter: (_) => setState(() => isHovered = true),
       onExit: (_) => setState(() => isHovered = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        margin: const EdgeInsets.only(bottom: 30),
-        padding: const EdgeInsets.all(30),
-        width: double.infinity,
-        transform: Matrix4.identity()..translate(0.0, isHovered ? -5.0 : 0.0),
-        decoration: BoxDecoration(
-          color: AppColors.secondary.withOpacity(0.5),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: isHovered
-                ? AppColors.primary.withOpacity(0.5)
-                : Colors.white10,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          // Timeline Dot
+          Positioned(
+            left: -45,
+            top: 30, // Align with the box top
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              width: 12,
+              height: 12,
+              decoration: BoxDecoration(
+                color: isHovered ? AppColors.primary : Colors.black,
+                border: Border.all(
+                  color: isHovered ? AppColors.primary : Colors.grey,
+                  width: 2,
+                ),
+                shape: BoxShape.circle,
+              ),
+            ),
           ),
-          boxShadow: isHovered
-              ? [
-                  BoxShadow(
-                    color: AppColors.primary.withOpacity(0.1),
-                    blurRadius: 20,
-                    offset: const Offset(0, 10),
-                  ),
-                ]
-              : [],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            margin: const EdgeInsets.only(bottom: 30),
+            padding: const EdgeInsets.all(30),
+            width: double.infinity,
+            transform: Matrix4.identity()
+              ..translate(0.0, isHovered ? -5.0 : 0.0),
+            decoration: BoxDecoration(
+              color: AppColors.secondary,
+              borderRadius: BorderRadius.circular(4), // Rectangular
+              border: Border.all(
+                color: isHovered ? AppColors.primary : Colors.white10,
+              ),
+            ),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Icon(
-                          Icons.business,
-                          color: AppColors.primary,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: const Icon(
+                              Icons.business,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                          const SizedBox(width: 15),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.experience.role,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  widget.experience.company,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white10,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        widget.experience.duration,
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 12,
                         ),
                       ),
-                      const SizedBox(width: 15),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.experience.role,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              widget.experience.company,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: AppColors.primary,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 10),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white10,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    widget.experience.duration,
-                    style: const TextStyle(color: Colors.white70, fontSize: 12),
-                  ),
+                const SizedBox(height: 20),
+                Text(
+                  widget.experience.description,
+                  style: const TextStyle(color: Colors.grey, height: 1.6),
+                ),
+                const SizedBox(height: 20),
+                Column(
+                  children: [
+                    _BulletPoint(
+                      text:
+                          "End-to-end App Publishing on Play Store & App Store",
+                    ),
+                    const SizedBox(height: 8),
+                    _BulletPoint(
+                      text: "Complex REST API & Firebase Backend Integration",
+                    ),
+                    const SizedBox(height: 8),
+                    _BulletPoint(
+                      text: "Advanced AdMob & Facebook Ad Integration",
+                    ),
+                    const SizedBox(height: 8),
+                    _BulletPoint(
+                      text:
+                          "Implementation of Clean Architecture & State Management",
+                    ),
+                  ],
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            Text(
-              widget.experience.description,
-              style: const TextStyle(color: Colors.grey, height: 1.6),
-            ),
-            const SizedBox(height: 20),
-            Column(
-              children: [
-                _BulletPoint(
-                  text: "End-to-end App Publishing on Play Store & App Store",
-                ),
-                const SizedBox(height: 8),
-                _BulletPoint(
-                  text: "Complex REST API & Firebase Backend Integration",
-                ),
-                const SizedBox(height: 8),
-                _BulletPoint(text: "Advanced AdMob & Facebook Ad Integration"),
-                const SizedBox(height: 8),
-                _BulletPoint(
-                  text:
-                      "Implementation of Clean Architecture & State Management",
-                ),
-              ],
-            ),
-          ],
-        ),
+          ),
+        ],
       ).animate().fadeIn(delay: widget.delay.ms).slideX(begin: 0.1, end: 0),
     );
   }
@@ -296,7 +306,7 @@ class _BulletPoint extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Icon(Icons.check_circle, color: AppColors.primary, size: 18),
+        const Icon(Icons.check, color: AppColors.primary, size: 18),
         const SizedBox(width: 10),
         Expanded(
           child: Text(

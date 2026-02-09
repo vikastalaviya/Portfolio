@@ -25,7 +25,7 @@ class DesktopHero extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 80),
+      padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 30),
       child: Column(
         children: [
           Row(
@@ -37,90 +37,81 @@ class DesktopHero extends GetView<HomeController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "Hi, I'm",
-                      style: AppTextStyles.header.copyWith(
-                        fontSize: 24,
-                        color: AppColors.primary,
-                      ),
+                    // "Hello." with Dot
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Text(
+                          "Hello",
+                          style: AppTextStyles.header.copyWith(
+                            fontSize: 60,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          ".",
+                          style: AppTextStyles.header.copyWith(
+                            fontSize: 60,
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ).animate().fadeIn(duration: 600.ms).slideX(begin: -30),
 
                     const SizedBox(height: 10),
 
-                    ShaderMask(
-                          shaderCallback: (bounds) =>
-                              AppColors.primaryGradient.createShader(bounds),
-                          child: Text(
-                            "Vikas Talaviya",
-                            style: AppTextStyles.header.copyWith(
-                              fontSize: 80,
-                              height: 1.0,
-                              color: Colors.white, // Required for shader
-                              fontWeight: FontWeight.w900,
-                            ),
+                    // "I'm Jensen" (Name)
+                    Row(
+                      children: [
+                        Container(
+                          height: 2,
+                          width: 50,
+                          color: AppColors.primary,
+                        ),
+                        const SizedBox(width: 15),
+                        Text(
+                          "I'm Vikas",
+                          style: AppTextStyles.subHeader.copyWith(
+                            fontSize: 32,
+                            color: AppColors.textGrey,
+                            fontWeight: FontWeight.w400,
                           ),
-                        )
-                        .animate()
-                        .fadeIn(delay: 200.ms, duration: 800.ms)
-                        .moveY(begin: 30, end: 0),
+                        ),
+                      ],
+                    ).animate().fadeIn(delay: 200.ms, duration: 800.ms),
 
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
 
+                    // "Software Developer" (Title)
                     Text(
-                      "Flutter Developer & Game Creator",
-                      style: AppTextStyles.subHeader.copyWith(
+                      "Software Developer",
+                      style: AppTextStyles.header.copyWith(
+                        fontSize: 72,
+                        height: 1.1,
                         color: Colors.white,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w900,
                       ),
                     ).animate().fadeIn(delay: 400.ms, duration: 600.ms),
-
-                    const SizedBox(height: 30),
-
-                    Text(
-                      "Building high-performance cross-platform experiences and\nengaging interactive games with a focus on seamless\ndesign and clean architecture.",
-                      style: AppTextStyles.body.copyWith(
-                        fontSize: 18,
-                        color: AppColors.textGrey,
-                        height: 1.6,
-                      ),
-                    ).animate().fadeIn(delay: 600.ms, duration: 600.ms),
 
                     const SizedBox(height: 50),
 
                     Row(
                       children: [
                         _HeroButton(
-                          text: "Contact Me",
+                          text: "Got a project?",
                           isPrimary: true,
                           onPressed: () =>
                               controller.scrollToSection(controller.contactKey),
                         ).animate().fadeIn(delay: 800.ms).scale(),
-
                         const SizedBox(width: 20),
-
                         _HeroButton(
-                          text: "View Projects",
+                          text: "My resume",
                           isPrimary: false,
-                          onPressed: () => controller.scrollToSection(
-                            controller.projectsKey,
-                          ),
+                          onPressed: () {}, // Add resume logic
                         ).animate().fadeIn(delay: 900.ms).scale(),
-                      ],
-                    ),
-
-                    const SizedBox(height: 60),
-
-                    // Social Icons
-                    Row(
-                      children: [
-                        _SocialIcon(icon: Icons.share, delay: 1000),
-                        const SizedBox(width: 30),
-                        _SocialIcon(icon: Icons.code, delay: 1100),
-                        const SizedBox(width: 30),
-                        _SocialIcon(icon: Icons.alternate_email, delay: 1200),
-                        const SizedBox(width: 30),
-                        _SocialIcon(icon: Icons.email, delay: 1300),
                       ],
                     ),
                   ],
@@ -128,28 +119,28 @@ class DesktopHero extends GetView<HomeController> {
               ),
               const SizedBox(width: 60),
 
+              // Image / Abstract Graphic
               LayoutBuilder(
                 builder: (context, constraints) {
                   double size = constraints.maxWidth < 600 ? 300 : 450;
                   return Stack(
                     alignment: Alignment.center,
                     children: [
+                      // Outer Glow Ring
                       Container(
                             width: size,
-                            height: size + 30,
+                            height: size,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
+                              border: Border.all(
+                                color: AppColors.primary.withOpacity(0.2),
+                                width: 2,
+                              ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppColors.primary.withOpacity(0.3),
-                                  blurRadius: 150,
-                                  spreadRadius: 2,
-                                ),
-                                BoxShadow(
-                                  color: AppColors.accent.withOpacity(0.3),
-                                  blurRadius: 150,
-                                  spreadRadius: 2,
-                                  offset: const Offset(50, 50),
+                                  color: AppColors.primary.withOpacity(0.1),
+                                  blurRadius: 50,
+                                  spreadRadius: 10,
                                 ),
                               ],
                             ),
@@ -159,97 +150,47 @@ class DesktopHero extends GetView<HomeController> {
                                 controller.repeat(reverse: true),
                           )
                           .scaleXY(
-                            begin: 0.9,
-                            end: 1.1,
+                            begin: 0.95,
+                            end: 1.05,
                             duration: 3000.ms,
                             curve: Curves.easeInOut,
                           ),
 
+                      // Inner decorative ring
                       Container(
-                            width: size,
-                            height: size + 30,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              border: Border.all(
-                                color: const Color(0x0DFFFFFF),
-                                width: 2,
-                              ),
-                              image: const DecorationImage(
-                                image: AssetImage('assets/ig.jpeg'),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          )
-                          .animate()
-                          .fadeIn(duration: 1000.ms)
-                          .moveY(begin: 50, end: 0)
-                          .shimmer(duration: 2000.ms, delay: 2000.ms),
+                        width: size * 0.8,
+                        height: size * 0.8,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: AppColors.primary, // Solid orange ring
+                            width: 15,
+                          ),
+                        ),
+                      ),
+
+                      // Image Container
+                      Container(
+                        width: size * 0.7, // slightly smaller than inner ring
+                        height: size * 0.7,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: const DecorationImage(
+                            image: AssetImage(
+                              'assets/ig.jpeg',
+                            ), // Use user's image
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ).animate().fadeIn(duration: 1000.ms),
                     ],
                   );
                 },
               ),
             ],
           ),
-
-          const SizedBox(height: 100),
-
-          // Glassmorphism Professional Objective Card
-          ClipRRect(
-            borderRadius: BorderRadius.circular(24),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(40),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.05),
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: Colors.white.withOpacity(0.1)),
-                  gradient: const LinearGradient(
-                    colors: [Color(0x0DFFFFFF), Colors.transparent],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(
-                              Icons.gps_fixed,
-                              color: AppColors.primary,
-                              size: 28,
-                            )
-                            .animate(
-                              onPlay: (controller) => controller.repeat(),
-                            )
-                            .rotate(duration: 4000.ms),
-                        const SizedBox(width: 12),
-                        Text(
-                          "Professional Objective",
-                          style: AppTextStyles.title.copyWith(
-                            fontSize: 22,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      "\"To leverage my expertise in Flutter and game development to create high-performance, visually stunning, and user-centric digital solutions. Committed to clean architecture and innovative problem-solving in a professional environment.\"",
-                      style: AppTextStyles.body.copyWith(
-                        fontStyle: FontStyle.italic,
-                        color: Colors.grey[300],
-                        fontSize: 18,
-                        height: 1.5,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ).animate().fadeIn(delay: 1500.ms).slideY(begin: 0.3, end: 0),
+          const SizedBox(height: 30),
+          const TechStackBar(),
         ],
       ),
     );
@@ -266,161 +207,189 @@ class MobileHero extends GetView<HomeController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Hi, I'm",
-            style: AppTextStyles.header.copyWith(
-              fontSize: 20,
-              color: AppColors.primary,
-            ),
-          ),
-          ShaderMask(
-            shaderCallback: (bounds) =>
-                AppColors.primaryGradient.createShader(bounds),
-            child: Text(
-              "Vikas\nTalaviya",
-              style: AppTextStyles.header.copyWith(
-                fontSize: 48,
-                height: 1.1,
-                color: Colors.white,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Text(
+                "Hello",
+                style: AppTextStyles.header.copyWith(
+                  fontSize: 40,
+                  color: Colors.white,
+                ),
               ),
-            ),
+              Text(
+                ".",
+                style: AppTextStyles.header.copyWith(
+                  fontSize: 40,
+                  color: AppColors.primary,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Container(height: 2, width: 30, color: AppColors.primary),
+              const SizedBox(width: 10),
+              Text(
+                "I'm Vikas",
+                style: AppTextStyles.subHeader.copyWith(
+                  fontSize: 24,
+                  color: AppColors.textGrey,
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 10),
           Text(
-            "Flutter Developer & Game Creator",
-            style: AppTextStyles.subHeader.copyWith(
+            "Software Developer",
+            style: AppTextStyles.header.copyWith(
+              fontSize: 48,
+              height: 1.1,
               color: Colors.white,
-              fontSize: 22,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 20),
-          Text(
-            "Building high-performance cross-platform experiences and engaging interactive games.",
-            style: AppTextStyles.body.copyWith(
-              color: AppColors.textGrey,
-              fontSize: 16,
-            ),
-          ),
-          const SizedBox(height: 30),
-
+          // const SizedBox(height: 40),
           Row(
             children: [
               Expanded(
                 child: _HeroButton(
-                  text: "Contact Me",
+                  text: "Got a project?",
                   isPrimary: true,
                   onPressed: () =>
                       controller.scrollToSection(controller.contactKey),
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 15),
               Expanded(
                 child: _HeroButton(
-                  text: "Projects",
+                  text: "My resume",
                   isPrimary: false,
-                  onPressed: () =>
-                      controller.scrollToSection(controller.projectsKey),
+                  onPressed: () {},
                 ),
               ),
             ],
-          ).animate().fadeIn(delay: 500.ms),
-
-          const SizedBox(height: 40),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _SocialIcon(icon: Icons.share, delay: 600),
-              _SocialIcon(icon: Icons.code, delay: 700),
-              _SocialIcon(icon: Icons.alternate_email, delay: 800),
-              _SocialIcon(icon: Icons.email, delay: 900),
-            ],
           ),
-
-          const SizedBox(height: 40),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.05),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.white.withOpacity(0.1)),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.gps_fixed,
-                          color: AppColors.primary,
-                          size: 24,
-                        ),
-                        const SizedBox(width: 12),
-                        Text(
-                          "Professional Objective",
-                          style: AppTextStyles.title.copyWith(
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      "\"To leverage my expertise in Flutter and game development to create high-performance, visually stunning, and user-centric digital solutions.\"",
-                      style: AppTextStyles.body.copyWith(
-                        fontStyle: FontStyle.italic,
-                        color: Colors.grey[300],
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // const SizedBox(height: 60),
+          const TechStackBar(),
         ],
       ),
     );
   }
 }
 
-class _SocialIcon extends StatelessWidget {
-  final IconData icon;
-  final int delay;
-  const _SocialIcon({required this.icon, required this.delay});
+class TechStackBar extends StatelessWidget {
+  const TechStackBar({Key? key}) : super(key: key);
+
+  final List<String> skills = const [
+    "FLUTTER",
+    "DART",
+    "FIREBASE",
+    "GETX",
+    "REST API",
+    "GIT",
+    "STATE MANAGEMENT",
+    "ADMOB",
+    "UI/UX",
+    "CLEAN ARCHITECTURE",
+    "FIGMA",
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            color: AppColors.secondary,
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.white10),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Center(child: Icon(icon, color: Colors.grey[400], size: 20)),
-        )
-        .animate(onPlay: (controller) => controller.repeat(reverse: true))
-        .moveY(
-          begin: 0,
-          end: -5,
-          duration: 2000.ms,
-          delay: delay.ms,
-          curve: Curves.easeInOut,
-        );
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        border: Border(
+          top: BorderSide(color: Colors.white.withOpacity(0.05)),
+          bottom: BorderSide(color: Colors.white.withOpacity(0.05)),
+        ),
+      ),
+      child: _InfiniteMarquee(
+        children: skills.map((skill) => _SkillItem(skill: skill)).toList(),
+      ),
+    ).animate().fadeIn(duration: 800.ms).slideY(begin: 1.0, end: 0.0);
+  }
+}
+
+class _SkillItem extends StatelessWidget {
+  final String skill;
+  const _SkillItem({required this.skill});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: Text(
+        skill,
+        style: AppTextStyles.body.copyWith(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: Colors.white.withOpacity(0.3),
+          letterSpacing: 2.0,
+        ),
+      ),
+    );
+  }
+}
+
+class _InfiniteMarquee extends StatefulWidget {
+  final List<Widget> children;
+
+  const _InfiniteMarquee({required this.children, Key? key}) : super(key: key);
+
+  @override
+  State<_InfiniteMarquee> createState() => _InfiniteMarqueeState();
+}
+
+class _InfiniteMarqueeState extends State<_InfiniteMarquee>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _controller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 20))
+          ..addListener(() {
+            if (_scrollController.hasClients) {
+              double maxScroll = _scrollController.position.maxScrollExtent;
+              if (_scrollController.offset >= maxScroll) {
+                _scrollController.jumpTo(0);
+              } else {
+                _scrollController.jumpTo(_scrollController.offset + 1.0);
+              }
+            }
+          })
+          ..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 30,
+      child: ListView.builder(
+        controller: _scrollController,
+        scrollDirection: Axis.horizontal,
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          return Row(children: widget.children);
+        },
+      ),
+    );
   }
 }
 
@@ -450,36 +419,22 @@ class _HeroButtonState extends State<_HeroButton> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         transform: Matrix4.identity()..scale(isHovered ? 1.05 : 1.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100), // Pill shape
-          gradient: widget.isPrimary ? AppColors.primaryGradient : null,
-          boxShadow: widget.isPrimary
-              ? [
-                  BoxShadow(
-                    color: AppColors.primary.withOpacity(isHovered ? 0.6 : 0.4),
-                    blurRadius: isHovered ? 30 : 20,
-                    offset: const Offset(0, 5),
-                  ),
-                ]
-              : [],
-        ),
         child: ElevatedButton(
           onPressed: widget.onPressed,
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.transparent,
+            backgroundColor: widget.isPrimary
+                ? AppColors.primary
+                : Colors.transparent,
             foregroundColor: Colors.white,
-            shadowColor: Colors.transparent,
+            shadowColor: Colors.transparent, // Flat style
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(100),
+              borderRadius: BorderRadius.circular(
+                4,
+              ), // Rectangular as requested
               side: widget.isPrimary
                   ? BorderSide.none
-                  : BorderSide(
-                      color: isHovered
-                          ? AppColors.primary
-                          : AppColors.primary.withOpacity(0.5),
-                      width: 2,
-                    ),
+                  : const BorderSide(color: Colors.white30, width: 1),
             ),
           ),
           child: Text(

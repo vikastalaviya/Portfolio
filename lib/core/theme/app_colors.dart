@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // Deep Space Theme
-  static const Color background = Color(0xFF0F172A); // Deep Blue/Slate
-  static const Color backgroundDark = Color(0xFF020617); // Almost Black
-  static const Color primary = Color(0xFF00F0FF); // Neon Cyan
-  static const Color primaryDark = Color(0xFF00B8D9); // Darker Cyan
-  static const Color secondary = Color(0xFF1E293B); // Slate 800
-  static const Color accent = Color(0xFF7000FF); // Electric Purple
+  // Jensen Omega Theme (Dark/Orange)
+  static const Color background = Color(0xFF0B1121); // Dark Navy/Black
+  static const Color backgroundDark = Color(0xFF000000); // Pure Black
+  static const Color primary = Color(0xFFFF5722); // Deep Orange
+  static const Color primaryDark = Color(0xFFE64A19); // Darker Orange
+  static const Color secondary = Color(0xFF1E293B); // Slate 800 (Card Bg)
+  static const Color accent = Color(0xFFFF8A65); // Light Orange/Salmon
 
   // Gradients
   static const LinearGradient primaryGradient = LinearGradient(
-    colors: [Color(0xFF00F0FF), Color(0xFF7000FF)],
+    colors: [Color(0xFFFF5722), Color(0xFFFF8A65)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );

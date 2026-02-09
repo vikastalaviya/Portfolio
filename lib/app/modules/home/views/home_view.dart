@@ -4,7 +4,6 @@ import 'package:flutter_application_1/core/theme/app_colors.dart';
 import '../controllers/home_controller.dart';
 import 'widgets/nav_bar.dart';
 import 'widgets/hero_section.dart';
-import 'widgets/skills_section.dart';
 import 'widgets/projects_section.dart';
 import 'widgets/experience_section.dart';
 import 'widgets/footer.dart';
@@ -42,8 +41,7 @@ class HomeView extends GetView<HomeController> {
           children: [
             const NavBar(),
             HeroSection(key: controller.heroKey),
-            const SizedBox(height: 80),
-            SkillsSection(key: controller.skillsKey),
+
             const SizedBox(height: 80),
             ExperienceSection(key: controller.experienceKey),
             const SizedBox(height: 80),

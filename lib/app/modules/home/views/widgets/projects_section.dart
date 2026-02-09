@@ -6,7 +6,6 @@ import 'package:flutter_application_1/core/theme/app_colors.dart';
 import 'package:flutter_application_1/core/theme/app_text_styles.dart';
 import 'package:flutter_application_1/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter_application_1/app/data/models/project.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProjectsSection extends GetView<HomeController> {
   const ProjectsSection({Key? key}) : super(key: key);
@@ -37,12 +36,28 @@ class _ProjectsContent extends GetView<HomeController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Projects Showcase",
-            style: AppTextStyles.header.copyWith(
-              fontSize: 40,
-              color: Colors.white,
-            ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Text(
+                "Selected",
+                style: AppTextStyles.header.copyWith(
+                  fontSize: 40,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Text(
+                "Projects",
+                style: AppTextStyles.header.copyWith(
+                  fontSize: 40,
+                  color: AppColors.primary, // Orange accent
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ).animate().fadeIn().moveX(begin: -20, end: 0),
 
           const SizedBox(height: 10),
@@ -50,7 +65,7 @@ class _ProjectsContent extends GetView<HomeController> {
           SizedBox(
             width: 600,
             child: Text(
-              "Exploring the intersection of performance and aesthetics. A collection of high-quality mobile experiences built with Flutter and modern cloud architectures.",
+              "Exploring the intersection of performance and aesthetics. A collection of high-quality mobile experiences.",
               style: AppTextStyles.body.copyWith(
                 fontSize: 16,
                 color: AppColors.textGrey,
@@ -64,7 +79,7 @@ class _ProjectsContent extends GetView<HomeController> {
             children: [
               _ProjectTab(label: "Mobile Games", isSelected: true),
               const SizedBox(width: 30),
-              _ProjectTab(label: "Mobile Applications", isSelected: false),
+              _ProjectTab(label: "Applications", isSelected: false),
             ],
           ).animate().fadeIn(delay: 300.ms),
 
@@ -77,7 +92,7 @@ class _ProjectsContent extends GetView<HomeController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Featured Games",
+                "Latest Works",
                 style: AppTextStyles.title.copyWith(
                   fontSize: 24,
                   color: Colors.white,
@@ -92,7 +107,10 @@ class _ProjectsContent extends GetView<HomeController> {
                 ),
                 label: const Text(
                   "View All",
-                  style: TextStyle(color: AppColors.primary),
+                  style: TextStyle(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 iconAlignment: IconAlignment.end,
               ),
@@ -135,7 +153,7 @@ class _ProjectsContent extends GetView<HomeController> {
             padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
             decoration: BoxDecoration(
               color: AppColors.secondary,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(4), // Rectangular
               border: Border.all(color: Colors.white10),
             ),
             child: Flex(
@@ -174,30 +192,11 @@ class _ProjectsContent extends GetView<HomeController> {
                           vertical: 16,
                         ),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(4),
                         ),
                       ),
                       child: const Text(
                         "Let's Talk",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    const SizedBox(width: 15),
-                    OutlinedButton(
-                      onPressed: () {},
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 16,
-                        ),
-                        side: BorderSide(color: Colors.grey[700]!),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: const Text(
-                        "Get Resume",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -233,7 +232,7 @@ class _ProjectTab extends StatelessWidget {
         const SizedBox(height: 8),
         AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          width: isSelected ? 50 : 0,
+          width: isSelected ? 30 : 0,
           height: 2,
           color: AppColors.primary,
         ),
@@ -267,24 +266,16 @@ class _ProjectCardState extends State<_ProjectCard> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         width: widget.width,
-        transform: Matrix4.translationValues(0, isHovered ? -10 : 0, 0),
+        transform: Matrix4.translationValues(0, isHovered ? -5 : 0, 0),
         decoration: BoxDecoration(
           color: AppColors.secondary,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(
+            0,
+          ), // Sharp corners or slight radius
           border: Border.all(
-            color: isHovered
-                ? AppColors.primary.withOpacity(0.5)
-                : Colors.transparent,
+            color: isHovered ? AppColors.primary : Colors.transparent,
+            width: 1,
           ),
-          boxShadow: isHovered
-              ? [
-                  BoxShadow(
-                    color: AppColors.primary.withOpacity(0.1),
-                    blurRadius: 20,
-                    spreadRadius: 0,
-                  ),
-                ]
-              : [],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -293,9 +284,6 @@ class _ProjectCardState extends State<_ProjectCard> {
             Container(
               height: 200,
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(16),
-                ),
                 image: DecorationImage(
                   image: NetworkImage(widget.project.imagePath),
                   fit: BoxFit.cover,
@@ -303,10 +291,10 @@ class _ProjectCardState extends State<_ProjectCard> {
               ),
               child: isHovered
                   ? Container(
-                      color: Colors.black45,
+                      color: AppColors.primary.withOpacity(0.2), // Orange tint
                       child: const Center(
                         child: Icon(
-                          Icons.touch_app,
+                          Icons.arrow_outward,
                           color: Colors.white,
                           size: 40,
                         ),
@@ -331,8 +319,8 @@ class _ProjectCardState extends State<_ProjectCard> {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.primary.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(4),
+                              border: Border.all(color: AppColors.primary),
+                              borderRadius: BorderRadius.circular(2),
                             ),
                             child: Text(
                               tag.toUpperCase(),
@@ -352,6 +340,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                     style: AppTextStyles.title.copyWith(
                       fontSize: 20,
                       color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -365,24 +354,13 @@ class _ProjectCardState extends State<_ProjectCard> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 25),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _StoreButton(
-                          text: "Play Store",
-                          icon: Icons.play_arrow,
-                          onPressed: () {},
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: _StoreButton(
-                          text: "App Store",
-                          icon: FontAwesomeIcons.apple,
-                          onPressed: () {},
-                        ),
-                      ),
-                    ],
+                  Text(
+                    "R E A D  M O R E",
+                    style: TextStyle(
+                      color: isHovered ? AppColors.primary : Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
@@ -391,34 +369,5 @@ class _ProjectCardState extends State<_ProjectCard> {
         ),
       ),
     ).animate().fadeIn(delay: widget.delay.ms).moveY(begin: 30, end: 0);
-  }
-}
-
-class _StoreButton extends StatelessWidget {
-  final String text;
-  final IconData icon;
-  final VoidCallback onPressed;
-  const _StoreButton({
-    required this.text,
-    required this.icon,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return OutlinedButton.icon(
-      onPressed: onPressed,
-      style: OutlinedButton.styleFrom(
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        side: BorderSide(color: Colors.grey[700]!),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      ),
-      icon: FaIcon(icon, size: 14),
-      label: Text(
-        text,
-        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-      ),
-    );
   }
 }

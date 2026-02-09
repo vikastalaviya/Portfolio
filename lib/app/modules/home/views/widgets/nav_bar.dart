@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:flutter_application_1/core/theme/app_colors.dart';
-import 'package:flutter_application_1/core/theme/app_text_styles.dart';
+
 import 'package:flutter_application_1/app/modules/home/controllers/home_controller.dart';
 
 class NavBar extends GetView<HomeController> {
@@ -23,8 +23,11 @@ class DesktopNavBar extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-      color: AppColors.background.withOpacity(0.9), // Slight transparency
+      padding: const EdgeInsets.symmetric(
+        horizontal: 100,
+        vertical: 30,
+      ), // Increased horizontal padding
+      color: Colors.transparent, // Transparent as per design
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -35,29 +38,21 @@ class DesktopNavBar extends GetView<HomeController> {
                 title: 'Home',
                 onTap: () => controller.scrollToSection(controller.heroKey),
               ),
-              const SizedBox(width: 30),
+              const SizedBox(width: 40),
+              _NavBarItem(
+                title: 'About',
+                onTap: () => controller.scrollToSection(controller.skillsKey),
+              ),
+              const SizedBox(width: 40),
               _NavBarItem(
                 title: 'Projects',
                 onTap: () => controller.scrollToSection(controller.projectsKey),
               ),
-              const SizedBox(width: 30),
+              const SizedBox(width: 40),
               _NavBarItem(
-                title: 'Skills',
-                onTap: () => controller.scrollToSection(controller.skillsKey),
-              ),
-              const SizedBox(width: 30),
-              _NavBarItem(
-                title: 'Experience',
-                onTap: () =>
-                    controller.scrollToSection(controller.experienceKey),
-              ),
-              const SizedBox(width: 30),
-              _NavBarItem(
-                title: 'Contact',
+                title: 'Contacts',
                 onTap: () => controller.scrollToSection(controller.contactKey),
               ),
-              const SizedBox(width: 30),
-              const HireMeButton(),
             ],
           ),
         ],
@@ -94,47 +89,14 @@ class NavBarLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 35,
-          height: 35,
-          decoration: BoxDecoration(
-            color: AppColors.primary,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(8),
-              bottomRight: Radius.circular(8),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.primary.withOpacity(0.4),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: const Center(
-            child: Text(
-              "V",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 12),
-        const Text(
-          'Vikas Talaviya',
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            letterSpacing: 0.5,
-          ),
-        ),
-      ],
+    return const Text(
+      'Jensen Omega', // Or User Name "Vikas Talaviya"
+      style: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+        letterSpacing: 0.5,
+      ),
     );
   }
 }
@@ -156,7 +118,9 @@ class _NavBarItem extends StatelessWidget {
             style: TextStyle(
               fontSize: 16,
               fontWeight: isHovered ? FontWeight.w600 : FontWeight.normal,
-              color: isHovered ? AppColors.primary : Colors.white70,
+              color: isHovered
+                  ? AppColors.primary
+                  : Colors.grey[400], // Grey by default, Orange on hover
             ),
           );
         },
@@ -181,27 +145,6 @@ class _HoverBuilderState extends State<HoverBuilder> {
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: widget.builder(_isHovered),
-    );
-  }
-}
-
-class HireMeButton extends StatelessWidget {
-  const HireMeButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {},
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primary,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-        elevation: 4,
-      ),
-      child: Text(
-        'Resume',
-        style: AppTextStyles.button.copyWith(fontWeight: FontWeight.bold),
-      ),
     );
   }
 }
